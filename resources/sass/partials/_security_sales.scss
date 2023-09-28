@@ -1,0 +1,15 @@
+.security-sales {
+    @extend .list-unstyled;
+
+    &-item {
+        @extend .montserratRegular;
+        
+        font-size: 14px;
+        color: $gray-md;
+
+        &-icon {
+            width: 15px;
+            margin-right: 3px;
+        }
+    }
+}

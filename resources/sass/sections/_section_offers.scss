@@ -1,0 +1,10 @@
+.section-offers {
+	@extend .section-bg;
+
+	.owl-carousel {
+
+		.owl-stage-outer {
+			padding: 130px 3px 3px 3px;
+		}
+	}
+}

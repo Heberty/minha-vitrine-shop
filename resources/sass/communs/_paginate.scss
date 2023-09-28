@@ -1,0 +1,17 @@
+.paginate {
+
+	.page-item {
+
+		&.desable {
+
+		}
+
+		&.active {
+
+		}
+
+		.page-link {
+			@extend .montserratRegular;
+		}
+	}
+}

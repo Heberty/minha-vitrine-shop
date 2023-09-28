@@ -1,0 +1,24 @@
+.section-slide {
+	@extend .section-bg, .d-none, .d-lg-block;
+
+	.slide-link {
+		border-radius: 15px;
+		display: block;
+
+		@media(min-width: 576px) {
+			border-radius: 25px;
+		}
+
+		@media(min-width: 992px) {
+			border-radius: 35px;
+		}
+
+		@media(min-width: 1200px) {
+			border-radius: 50px;
+		}
+
+		.slide-image {
+			@extend .img-fluid;
+		}
+	}
+}

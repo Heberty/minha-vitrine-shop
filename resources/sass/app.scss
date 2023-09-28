@@ -1,0 +1,55 @@
+// Dependencies
+@import "~bootstrap/scss/bootstrap";
+@import "~owl.carousel/dist/assets/owl.carousel.min.css";
+@import "~@fancyapps/fancybox/dist/jquery.fancybox.min.css";
+@import "~animatewithsass";
+// @import "~sweetalert2/dist/sweetalert2.min.css";
+@import "/css/sweetalert2.min.css";
+@import "~font-awesome/scss/font-awesome";
+
+// Communs
+@import "communs/variables";
+@import "communs/fonts";
+@import "communs/communs";
+@import "communs/button";
+@import "communs/text";
+@import "communs/base";
+@import "communs/slide";
+@import "communs/form";
+@import "communs/modal";
+@import "communs/paginate";
+
+// Blocks
+@import "blocks/header";
+@import "blocks/footer";
+
+// Partials
+@import "partials/product_card";
+@import "partials/product_card_inner";
+@import "partials/menu_site";
+@import "partials/develop_link";
+@import "partials/menu_mobile";
+@import "partials/search_bar";
+@import "partials/selos_networks";
+@import "partials/welcome";
+@import "partials/payment";
+@import "partials/list_categories";
+@import "partials/security_sales";
+@import "partials/cart_float";
+
+// Sections
+@import "sections/section_offers";
+@import "sections/section_offer";
+@import "sections/section_last_offers";
+@import "sections/section_slide";
+@import "sections/section_search";
+@import "sections/section_benefits";
+@import "sections/section_delivery";
+@import "sections/section_contact";
+@import "sections/section_payment";
+@import "sections/section_information";
+@import "sections/section_brands";
+@import "sections/section_about";
+@import "sections/section_trial";
+@import "sections/section_categories";
+@import "sections/section_cart";

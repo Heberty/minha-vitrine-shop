@@ -1,0 +1,9 @@
+.section-categories {
+	@extend .section-bg;
+	
+	padding: 20px 0;	
+	
+	@media(min-width: 992px) {
+		padding: 50px 0;
+	}
+ }

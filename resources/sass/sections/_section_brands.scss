@@ -1,0 +1,10 @@
+.section-brands {
+
+	.brand-link {
+		@extend .center-center;
+		
+		.brand-image {
+			width: 120px;
+		}
+	}
+}

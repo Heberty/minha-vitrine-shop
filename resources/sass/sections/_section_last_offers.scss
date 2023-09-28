@@ -1,0 +1,14 @@
+.section-last-offers {
+	padding-top: 80px;
+
+	@media(min-width: 992px) {
+		padding-top: 100px;
+	}
+
+	.owl-carousel {
+
+		.owl-stage-outer {
+			padding: 0 3px 3px 3px;
+		}
+	}
+}

@@ -1,0 +1,13 @@
+.section-contact {
+
+	.text-legal-contact {
+		@extend .text-center;
+		
+		p {
+			@extend .montserratRegular;
+
+			color: $text-color;
+			font-size: 18px;
+		}
+	}
+}

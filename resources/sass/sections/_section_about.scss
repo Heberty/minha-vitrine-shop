@@ -1,0 +1,27 @@
+.section-about {
+	@extend .section-bg;
+
+	padding: 100px 0;
+
+	@media(min-width: 992px) {
+		padding: 150px 0;
+	}
+
+	.about-image {
+		@extend .bg-default;
+
+		width: 100%;
+		height: 350px;
+		border-radius: 50px;
+		margin-bottom: 30px;
+
+		@media(min-width: 992px) {
+			height: 500px;
+			margin-bottom: 0;
+		}
+
+		@media(min-width: 1200px) {
+			height: 550px;
+		}
+	}
+}

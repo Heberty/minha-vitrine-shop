@@ -1,0 +1,95 @@
+.form-site {
+
+	.form-group {
+		margin-bottom: 20px;
+
+		@media(min-width: 992px) {
+			margin-bottom: 30px;
+		}
+
+		.form-label {
+			@extend .montserratSemiBold;
+
+			font-size: 20px;
+			color: $predominant-color;
+
+			@media(min-width: 992px) {
+				font-size: 22px;
+			}
+
+			@media(min-width: 1200px) {
+				font-size: 25px;
+			}
+		}
+
+		.form-control,
+		textarea.form-control,
+		.custom-select {
+			border-radius: 50px;
+			border: 1px solid rgba(112,112,112,.5);
+			width: 100%;
+			padding: 24px 20px;
+			font: 18px;
+			color: $text-color;
+
+			@media(min-width: 992px) {
+				padding: 28px 20px;
+				font-size: 20px;
+			}
+
+			@media(min-width: 1200px) {
+				padding: 34px 20px;
+				font-size: 20px;
+			}
+
+			&::placeholder {
+				font-size: 18px;
+				color: $text-color;
+
+				@media(min-width: 992px) {
+					font-size: 20px;
+				}
+			}
+		}
+
+		textarea.form-control {
+			resize: none;
+			height: 232px;
+
+			@media(min-width: 992px) {
+				height: 250px;
+			}
+		}
+
+		.input-group {
+			position: relative;
+
+			&:after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				right: 5%;
+				width: 0;
+				height: 0;
+				border-left: 10px solid transparent;
+				border-top: 10px solid $predominant-color;
+				border-right: 10px solid transparent;
+			}
+
+			.custom-select {
+				background: unset;
+				padding: 0 20px;
+				height: 50px;
+
+				@media(min-width: 992px) {
+					height: 62px;
+				}
+
+				@media(min-width: 1200px) {
+					height: 70px;
+				}
+			}
+		}
+	}
+}

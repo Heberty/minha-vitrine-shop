@@ -1,0 +1,15 @@
+.section-payment {
+	@extend .section-bg, .d-none, .d-lg-block;
+
+	padding: 60px 0;
+
+	.text-legal {
+
+		p {
+			@extend .montserratRegular;
+
+			font-size: 18px;
+			color: $text-color;
+		}
+	}
+}

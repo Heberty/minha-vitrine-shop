@@ -1,0 +1,54 @@
+.section-delivery {
+	padding-top: 60px;
+
+	@media(min-width: 992px) {
+		padding-top: 100px;
+	}
+
+	.image-delivery {
+		@extend .img-fluid;
+
+		margin-bottom: 30px;
+
+		@media(min-width: 992px) {
+			margin-bottom: 0;
+		}
+	}
+
+	.title-delivery {
+		@extend .montserratSemiBold;
+
+		color: $predominant-color;
+		margin-bottom: 30px;
+		font-size: 25px;
+
+		@media(min-width: 992px) {
+			font-size: 35px;
+		}
+
+		@media(min-width: 1200px) {
+			font-size: 40px;
+		}
+	}
+
+	.text-delivery {
+		@extend .montserratRegular;
+
+		font-size: 18px;
+		color: $text-color;
+		margin-bottom: 30px;
+
+		@media(min-width: 992px) {
+			font-size: 20px;
+		}
+	}
+
+	.text-legal-delivery {
+		@extend .montserratRegular;
+
+		font-size: 12px;
+		color: $text-color;
+		display: inline-block;
+		margin-top: 5px;
+	}
+}

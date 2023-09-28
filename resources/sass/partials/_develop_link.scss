@@ -1,0 +1,10 @@
+.develop-link {
+	@extend .montserratRegular;
+
+	font-size: 16px;
+	color: $text-color;
+
+	img {
+		width: 100px;
+	}
+}

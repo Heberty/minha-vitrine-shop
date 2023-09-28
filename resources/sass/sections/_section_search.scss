@@ -1,0 +1,11 @@
+.section-search {
+	@extend .section-bg;
+	
+	padding-top: 20px;
+	padding-bottom: 35px;
+
+	@media(min-width: 992px) {
+		padding-top: 120px;
+		padding-bottom: 45px;
+	}
+}

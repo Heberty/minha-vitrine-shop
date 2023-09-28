@@ -1,0 +1,207 @@
+.section-cart {
+    @extend .section-bg;
+
+    .btn-delete-all-cart {
+        @extend .montserratSemiBold;
+        
+        border-radius: 0 0 20px 20px;
+        font-size: 18px;
+        text-transform: uppercase;
+        color: #fff;
+        display: block;
+
+        &:hover {
+            filter: grayscale(80%);
+        }
+    }
+
+    .list-cart {
+        @extend .list-unstyled;
+
+        height: 100%;
+
+        &-item {
+            @extend .d-flex;
+
+            border-bottom: 1px solid $gray-lt;
+            padding: 20px;
+
+            &-body {
+                @extend .d-flex, .flex-column, .flex-lg-row, .justify-content-between;
+                
+                border-radius: 20px 0 0 20px;
+                box-shadow: $shadow;
+                overflow: hidden;
+                padding: 10px 20px 10px 20px;
+                position: relative;
+                width: 100%;
+
+                .list-cart-item-body-text-title,
+                .list-cart-item-body-value-title,
+                .list-cart-item-body-amount-label {
+                    @extend .montserratSemiBold;
+
+                    font-size: 16px;
+                    margin-bottom: 10px;
+
+                    @media(min-width: 1200px) {
+                        font-size: 18px;
+                    }
+                }
+
+                &-image {
+                    
+                    img {
+                        width: 70px;
+
+                        @media(min-width: 1200px) {
+                            width: 100px;
+                        }
+                    }
+                }
+
+                &-text {
+
+                    &-title {
+                    }
+
+                    &-brand {
+                        @extend .montserratRegular;
+
+                        color: $gray-lt;
+                        font-size: 16px;
+                        margin-bottom: 0;
+                    }
+                }
+
+                &-value {
+                    &-title {
+                    }
+
+                    &-price {
+                        @extend .montserratRegular;
+
+                        font-size: 16px;
+                        color: $gray-lt;
+                    }
+                }
+
+                &-amount {
+
+                    &-label {
+                    }
+
+                    &-count {
+                        @extend .montserratRegular;
+
+                        font-size: 16px;
+                        color: $gray-lt;
+                        border: 1px solid $gray-lt;
+                        padding: 10px;
+                        border-radius: 10px;
+                    }
+                }
+            }
+
+            &-action {
+
+                &-delete {
+                    @extend .center-center;
+
+                    height: 100%;
+                    display: inline-block;
+                    border-radius: 0 20px 20px 0;
+                    width: 70px;
+
+                    @media(min-width: 1200px) {
+                        width: 100px;
+                    }
+
+                    &:hover {
+                        filter: grayscale(80%);
+                    }
+
+                    &-icon {
+                        width: 30px;
+                    } 
+                }
+            }
+        }
+
+        &-empty {
+            @extend .text-center, .d-flex, .flex-column, .justify-content-center, .align-items-center, .h-100;
+
+            &-image {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 30px;
+            }
+
+            &-text {
+                @extend .montserratRegular;
+
+                font-size: 20px;
+                color: $gray-lt;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    .sidebar-cart {
+
+        &-title {
+            @extend .montserratSemiBold;
+
+            font-size: 28px;
+        }
+
+        &-body {
+            border-radius: 20px;
+            box-shadow: $shadow;
+            padding: 20px;
+
+            &-total {
+                @extend .montserratSemiBold;
+
+                font-size: 18px;
+                color: $green;
+            }
+
+            &-form {
+
+                .form-group {
+                    @extend .d-flex, .flex-column;
+
+                    .custom-control {
+                        &.custom-checkbox {
+
+                        }
+                    } 
+                    
+                    .form-control {
+                        @extend .montserratRegular;
+                        
+                        border-radius: 20px;
+                    }
+                        
+                    .form-control,
+                    .form-label {
+                        font-size: 16px;
+                        color: $gray-lt;
+                    }
+
+                    .form-label {
+                        @extend .montserratSemiBold;
+                    }
+                }
+            }
+
+            .small-text {
+                @extend .montserratRegular;
+
+                font-size: 14px;
+                color: $gray-lt;
+            }
+        }
+    }
+}

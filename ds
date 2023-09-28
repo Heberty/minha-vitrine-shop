@@ -1,0 +1,392 @@
+#!/bin/bash
+
+# #########################################################################################################################################
+
+SCRIPTPATH=$(dirname "$0")
+DSCONF_DIR="dsconf"
+DSCONF="$SCRIPTPATH/$DSCONF_DIR"
+PWD_ADMIN="$DSCONF/pwd_admin"
+FNS_ADMIN="$DSCONF/functions_admin"
+UPDATE_CMD=""
+
+# #########################################################################################################################################
+
+PROJECTS=""
+HOOK_LOGIN=""
+HOOK_BEFORE_PULL=""
+HOOK_AFTER_PULL=""
+HOOK_LOGOUT=""
+
+# #########################################################################################################################################
+
+# Protegendo as senhas...
+inicializa(){
+
+	if [[ ! -f .gitignore ]]; then
+		echo -e "\nRapaz... Melhor não continuar... \n"
+		exit 1
+	else
+		if [[ `cat .gitignore | grep -o "$DSCONF_DIR" | wc -l` -eq 0 ]]; then
+			echo "$DSCONF_DIR" >> .gitignore
+		fi
+	fi
+
+	# Criando diretório
+	if [[ ! -d $DSCONF ]]; then
+		mkdir $DSCONF;
+	fi
+
+	# Criando arquivo de funções customizadas
+	if [[ ! -f $FNS_ADMIN ]]; then
+		echo -e "#!/bin/bash \n" >> $FNS_ADMIN
+	fi
+
+	# Criando arquivo de configuração
+	if [[ ! -f $PWD_ADMIN ]]; then
+		echo -e "#!/bin/bash \n" >> $PWD_ADMIN
+		echo "dsa_server=" >> $PWD_ADMIN
+		echo "dsa_port=22" >> $PWD_ADMIN
+		echo "dsa_login=" >> $PWD_ADMIN
+		echo "dsa_pass=" >> $PWD_ADMIN
+		echo "dsa_dir_suffix=" >> $PWD_ADMIN
+		echo "dsa_branch=" >> $PWD_ADMIN
+		echo "# Em 'dsa_subdomains' coloque os subdomínios separados por ' '(espaço)." >> $PWD_ADMIN
+		echo "dsa_subdomains=\"\"" >> $PWD_ADMIN
+
+		echo -e "\nArquivo de configuração criado em '$PWD_ADMIN', atualize-o para fazer a atualização automática dos seus projetos!! "
+		exit 1
+	fi
+
+	source $PWD_ADMIN;
+}
+
+# #########################################################################################################################################
+
+assinatura_comandos(){
+
+	build_comando "echo \" \""
+	build_comando "echo \" _____  _                    _____             _             \""
+	build_comando "echo \" |  _ \(_)                  /  ___|           | |            \""
+	build_comando "echo \" | | | |_  ___  __ _  ___   \ '--.  __ _ _ __ | |_ ___  ___  \""
+	build_comando "echo \" | | | | |/ _ \/ _' |/ _ \   '--. \/ _' | '_ \| __/ _ \/ __| \""
+	build_comando "echo \" | |/ /| |  __/ (_| | (_) | /\__/ / (_| | | | | || (_) \__ \ \""
+	build_comando "echo \" |___/ |_|\___|\__, |\___/  \____/ \__,_|_| |_|\__\___/|___/ \""
+	build_comando "echo \"                __/ |                                        \""
+	build_comando "echo \"               |___/                     dinatalrn@gmail.com \""
+
+}
+
+# #########################################################################################################################################
+
+build_comando(){
+	end_comando "$1 &&"
+}
+
+end_comando(){
+	UPDATE_CMD=`echo "$UPDATE_CMD $1"`
+}
+
+# #########################################################################################################################################
+
+gera_comandos(){
+
+	UPDATE_CMD=""
+
+	if [[ "$HOOK_LOGIN" != "" ]]; then
+		build_comando "$HOOK_LOGIN"
+	fi
+
+	for i in $@; do
+		build_comando "cd $i$dsa_dir_suffix && echo -e \"\nAtualizando $i$dsa_dir_suffix ...\n\""
+		if [[ "$HOOK_BEFORE_PULL" != "" ]]; then
+			build_comando "$HOOK_BEFORE_PULL"
+		fi
+		build_comando "git pull origin $dsa_branch"
+		if [[ "$HOOK_AFTER_PULL" != "" ]]; then
+			build_comando "$HOOK_AFTER_PULL"
+		fi
+		build_comando "echo -e \"\nProjeto $i$dsa_dir_suffix atualizado com sucesso!!!\n\" && cd .."
+	done
+
+	if [[ "$HOOK_LOGOUT" != "" ]]; then
+		build_comando "$HOOK_LOGOUT"
+	fi
+
+	assinatura_comandos
+
+	end_comando "echo -e \"\n>>> Atualizações concluídas!!!\n\""
+
+}
+
+# #########################################################################################################################################
+
+executa(){
+
+	UPDATE_PROJECTS=`echo "$dsa_subdomains"`
+	if [[ "$PROJECTS" != "" ]]; then
+		UPDATE_PROJECTS=`echo "$PROJECTS"`
+	fi
+
+	if [[ "$ACTIVATE" != "" ]]; then
+		echo -e "\nVocê está tentando ATIVAR o projeto: \n"
+		echo " > $ACTIVATE$dsa_dir_suffix"
+	else
+		echo -e "\nOs seguintes projetos serão atualizados: \n"
+		for i in $(echo "$UPDATE_PROJECTS"); do
+			echo " > $i$dsa_dir_suffix"
+		done
+	fi
+
+	if [[ $DEBUG -eq 1 ]]; then
+		gera_comandos "$UPDATE_PROJECTS"
+		show_debug "CMD" "$UPDATE_CMD"
+	fi
+
+	echo ""
+	read -p "Deseja continuar (y/N)? " CHOICE
+	case "$CHOICE" in 
+	  	y|Y ) 
+
+			# Monta comando baseado nas configurações
+			gera_comandos "$UPDATE_PROJECTS"
+
+			echo -e "\nConexão: ssh -p $dsa_port $dsa_login@$dsa_server";
+			echo "A senha é: $dsa_pass";
+			ssh -p $dsa_port -t "$dsa_login@$dsa_server" "$UPDATE_CMD";
+			echo ""
+		;;
+		# n|N ) 
+		# 	echo "no"
+		# ;;
+	 	* ) 
+			echo -e "\nCancelado!!! ";
+		;;
+	esac
+
+}
+
+# #########################################################################################################################################
+
+init_debug(){
+	if [[ $DEBUG -eq 1 ]]; then
+		cat << "EOS"
+          -=-                                                  -=-
+#######(\#####/)############################################(\#####/)#######
+#######( \( )/ )###### ###   ##### ####  #    #  #### ######( \( )/ )#######
+#######(       )###### #  #  #     #   # #    # #     ######(       )#######
+########`>   <´####### #   # ###   ####  #    # #  ## #######`>   <´########
+########/     \####### #  #  #     #   # #    # #   # #######/     \########
+########`-._.-´####### ###   ##### ####   ####   ###  #######`-._.-´########
+############################################################################
+EOS
+	fi
+}
+
+author(){
+	cat << "EOF"
+       _,.
+     ,` -.)
+    '( _/'-\\-.               
+   /,|`--._,-^|            ,     
+   \_| |`-._/||          ,'|       
+     |  `-, / |         /  /      
+     |     || |        /  /       
+      `r-._||/   __   /  /  
+  __,-<_     )`-/  `./  /
+ /  \   `---'   \   /  / 
+|    |           |./  /  
+\    /           //  /     
+ \_/' \         |/  /         
+  |    |   _,^-'/  /              
+  |    , ``  (\/  /_        
+   \,.->._    \X-=/^         
+   (  /   `-._//^`  
+    `Y-.____(__}              
+     |     {__)           
+           ()`     
+EOF
+	assinatura_comandos
+	end_comando "echo \"\" && date;"
+	eval "$UPDATE_CMD";
+	exit 1
+}
+
+# #########################################################################################################################################
+
+if [[ "$@" = "--author" ]]; then
+	author
+fi
+
+if [[ "$@" = "--help" ]]; then
+	cat <<EOS
+
+Como usar:
+    
+
+        \$ sh $0 [--author] [--projects="<lista de projetos>"] [--pos-login="<cmds>"] 
+                 [--pre-update="<cmds>"] [--pos-update="<cmds>"] [--pre-logout="<cmds>"]
+
+
+Funções de atualização: 
+  
+  --author         > Exibe informações sobre o autor deste shell.
+  
+  --projects       > Seleciona um ou mais projetos para aplicar atualizações, caso esse
+                   parâmetro seja omitido os projetos serão recuperados da configuração
+                   no arquivo $PWD_ADMIN.
+
+  --pos-login      > Gancho para executar o comando informado no instante imediatamente
+                   após conectar por ssh.
+
+  --pre-update     > Gancho para executar o comando informado no instante imediatamente
+                   antes de fazer o update(pull).
+
+  --pos-update     > Gancho para executar o comando informado no instante imediatamente
+                   após realizar o update(pull).
+
+  --pre-logout     > Gancho para executar o comando informado no instante imediatamente
+                   antes de desconectar do ssh.
+
+                                                                         By Diego Santos
+EOS
+	exit 1
+fi
+
+# #########################################################################################################################################
+
+show_debug(){
+	if [[ $DEBUG -eq 1 ]]; then
+		echo -e "\n############################################################################"
+		if [[ "$1" = "CMD" ]]; then
+			shift
+			BUFFER=`echo "$@" | sed 's/&&/\\n > & /g'`
+			echo -e "\n$BUFFER"
+		else
+			echo "$@"
+		fi
+		echo -e "############################################################################\n"
+	fi
+}
+
+# #########################################################################################################################################
+
+fn_lista(){
+	source $FNS_ADMIN
+	VIEW_NAME_FN="               "
+	LIST_CMDS=`cat $FNS_ADMIN | grep -Eo "^[^\( ]+\(\)" | sed 's/()//'`
+	for i in $LIST_CMDS; do
+		if [[ `echo $i | grep -o "_help$" | wc -l` -eq 0 ]]; then
+			FN_WHITE=`echo $i | sed -E 's/./ /g'`
+			IT_FN=`echo "$VIEW_NAME_FN" | sed -E "s/^$FN_WHITE/$i/"`
+			echo -e "     $IT_FN => $("${i}_help") \n"
+		fi
+	done
+}
+
+fn_exec(){
+	source $FNS_ADMIN
+	$@;
+}
+
+fn_rm(){
+	sed '/# Inicio funcao >>'$1'<</,/# Fim funcao >>'$1'<</d' $FNS_ADMIN > "$FNS_ADMIN.tmp"
+	sed '/^[\s\t]*$/d' "$FNS_ADMIN.tmp" | sed -e 's:#!/bin/bash:#!/bin/bash\n:' | sed -E "s:# Fim (.*)$:# Fim \1\n:g" > $FNS_ADMIN
+	rm -f "$FNS_ADMIN.tmp"
+}
+
+# #########################################################################################################################################
+
+extrai_params(){
+	PARAM="$1"
+	shift
+	echo "$@" | grep -Eo "${PARAM}=(.*)" | sed -E 's/ \-\-(pos\-login|pre\-update|pos\-update|pre\-logout|projects)(.*)//' | sed "s/$PARAM=//"
+}
+
+init_params(){
+	for (( i = 1; i <= $#; i++ )); do
+		if [[ `echo "${!i}" | grep -Eo "^\-\-pos\-login=" | wc -l` -gt 0 ]]; then
+			HOOK_LOGIN=`extrai_params "\-\-pos\-login" $@`
+		elif [[ `echo "${!i}" | grep -Eo "^\-\-pre\-update=" | wc -l` -gt 0 ]]; then
+			HOOK_BEFORE_PULL=`extrai_params "\-\-pre\-update" $@`
+		elif [[ `echo "${!i}" | grep -Eo "^\-\-pos\-update=" | wc -l` -gt 0 ]]; then
+			HOOK_AFTER_PULL=`extrai_params "\-\-pos\-update" $@`
+		elif [[ `echo "${!i}" | grep -Eo "^\-\-pre\-logout=" | wc -l` -gt 0 ]]; then
+			HOOK_LOGOUT=`extrai_params "\-\-pre\-logout" $@`
+		elif [[ `echo "${!i}" | grep -Eo "^\-\-projects=" | wc -l` -gt 0 ]]; then
+			TMP_PROJECTS=`extrai_params "\-\-projects" $@`
+			PROJECTS=`echo "$TMP_PROJECTS" | sed -E "s/"$dsa_dir_suffix"( )?//g"`
+		elif [[ `echo "${!i}" | grep -Eo "^\-\-debug[=]?" | wc -l` -gt 0 ]]; then
+			DEBUG=1
+		fi
+	done
+}
+
+# #########################################################################################################################################
+
+#inicializa && executa
+
+inicializa
+
+if [[ "$1" = "--fn" ]]; then
+
+	echo -e "\nFunções disponíveis: \n"
+	fn_lista
+
+elif [[ `echo "$1" | grep -Eo "^\-\-fn\-exec=" | wc -l` -gt 0 ]]; then
+
+	VAL=`echo "$1" | cut -d "=" -f 2`
+	shift
+	if [[ "$VAL" != "" ]]; then
+		fn_exec $VAL $@
+	fi
+
+elif [[ `echo "$1" | grep -Eo "^\-\-fn\-rm=" | wc -l` -gt 0 ]]; then
+
+	VAL=`echo "$1" | cut -d "=" -f 2`
+	shift
+	if [[ "$VAL" != "" ]]; then
+		fn_rm $VAL
+	fi
+
+elif [[ `echo "$1" | grep -Eo "^\-\-fn\-add=" | wc -l` -gt 0 ]]; then
+
+	NAME_FN=`echo "$1" | cut -d "=" -f 2`
+	shift
+	if [[ `cat $FNS_ADMIN | grep -Eo "^$NAME_FN\(\)\{" | wc -l` -eq 0 ]]; then
+
+		echo -e "\n# Inicio funcao >>$NAME_FN<< \n$NAME_FN(){" >> $FNS_ADMIN
+		DYN_CMD=""
+		for (( i = 1; i <= $#; i++ )); do
+			if [[ `echo "${!i}" | grep -Eo "(^\-| )" | wc -l` -gt 0 ]]; then
+				DYN_CMD=`echo "$DYN_CMD \"${!i}\""`
+			else
+				DYN_CMD=`echo "$DYN_CMD ${!i}"`
+			fi
+		done
+		echo "    $DYN_CMD" >> $FNS_ADMIN
+		echo "}" >> $FNS_ADMIN
+
+		echo " "
+		read -p "Informe uma descrição: " DESC 
+		echo " "
+		if [[ "$DESC" = "" ]]; then
+			DESC="Sem descrição... :'("
+		fi
+
+		echo "${NAME_FN}_help(){" >> $FNS_ADMIN
+		echo "    echo -e \"$DESC\"" >> $FNS_ADMIN
+		echo "}" >> $FNS_ADMIN
+
+		echo "# Fim funcao >>$NAME_FN<<" >> $FNS_ADMIN
+
+	else
+		echo "A função '$1' já existe!!! :P"
+	fi
+
+else
+
+	init_params $@
+	init_debug
+	executa
+
+fi

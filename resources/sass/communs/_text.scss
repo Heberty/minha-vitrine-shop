@@ -1,0 +1,133 @@
+.title-section-box {
+	@extend .text-center;
+
+	margin-bottom: 40px;
+
+	.title-section {
+		@extend .montserratRegular;
+
+		color: $first-title-color;
+		margin-bottom: 10px;
+		font-size: 32px;
+
+		@media(min-width: 992px) {
+			font-size: 48px;
+		}
+
+		@media(min-width: 1200px) {
+			font-size: 60px;
+		}
+
+		span {
+			@extend .montserratSemiBold;
+
+			color: $second-title-color;
+		}
+	}
+
+	.title-section-description {
+		@extend .montserratRegular;
+		
+		color: $text-color;
+		margin-bottom: 0;
+		font-size: 18px;
+
+		@media(min-width: 992px) {
+			font-size: 22px;
+		}
+
+		@media(min-width: 1200px) {
+			font-size: 25px;
+		}
+	}
+}
+
+
+.text-area {
+
+	p, span, li, small, a {
+		@extend .montserratRegular;
+	}
+
+	p, a, small, li, span, strong, b {
+		color: $text-color;
+
+		font-size: 14px;
+
+		@media(min-width: 1200px) {
+			font-size: 16px;
+		}
+	}
+
+	strong, b {
+
+	}
+
+	a {
+		color: $predominant-color;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	h1, h2, h3, h4, h5 {
+		@extend .montserratSemiBold;
+
+		color: $gray-md;
+	}
+
+	strong, b {
+		@extend .montserratSemiBold;
+
+		color: $predominant-color;
+	}
+
+	h1 {
+		font-size: 28px;
+
+		@media(min-width: 992px) {
+			font-size: 30px;
+		}
+	}
+
+	h2 {
+		font-size: 25px;
+		
+		@media(min-width: 992px) {
+			font-size: 28px;
+		}
+	}
+
+	h3 {
+		font-size: 22px;
+		
+		@media(min-width: 992px) {
+			font-size: 25px;
+		}
+	}
+
+	ul {
+		@extend .list-unstyled;
+
+		li {
+			@extend .d-flex;
+
+			&:before {
+				content: "";
+				width: 10px;
+				min-width: 10px;
+				max-width: 10px;
+				height: 10px;
+				max-height: 10px;
+				min-height: 10px;
+				background-color: $predominant-color;
+				border-radius: 50%;
+				margin-right: 10px;
+				position: relative;
+    			top: 0.6rem;
+			}
+		}
+	}
+
+}

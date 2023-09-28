@@ -1,0 +1,54 @@
+.selos-networks {
+	@extend .list-unstyled, .d-none, .d-lg-block;
+
+	margin-bottom: 0;
+	position: fixed;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 0;
+	z-index: 30;
+
+	&-item {
+
+		&-link {
+			@extend .text-center;
+
+			padding: 25px 20px;
+		    transform: translateX(20%);
+		    transition: 0.5s ease;
+		    display: block;
+
+			&.whatsapp {
+				background-color: $green;
+				border-radius: 50px 0 0 0;
+			}
+
+			&.facebook {
+				background-color: $blue-lt;
+			}
+
+			&.instagram {
+				background-image: $instagram;
+				border-radius: 0 0 0 50px;
+			}
+
+			&-icon {
+				width: 30px;
+				margin-bottom: 5px;
+			}
+
+			&-text {
+				@extend .montserratRegular;
+
+				font-size: 12px;
+				margin-bottom: 0;
+				color: #fff;
+			}
+
+			&:hover {
+			    transform: translateX(0);
+			    transition: 0.5s ease;
+			}
+		}
+	}
+}

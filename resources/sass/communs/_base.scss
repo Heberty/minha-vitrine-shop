@@ -1,0 +1,29 @@
+body {
+	background-image: url('/images/bg-dots.svg');
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 150%;
+	
+	a {
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	button {
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	section {
+		padding-bottom: 60px;
+
+		@media(min-width: 992px) {
+			padding-bottom: 100px;
+		}
+	}
+}

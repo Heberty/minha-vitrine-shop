@@ -1,0 +1,28 @@
+.section-information {
+	padding: 34px 0;
+	background-color: $predominant-color;
+
+	.text-information {
+		
+		p {
+			@extend .montserratRegular;
+
+			font-size: 18px;
+			color: #fff;
+			margin-bottom: 0;
+		}
+	}
+
+	.link-information {
+		@extend .montserratRegular;
+
+		font-size: 18px;
+		color: #fff;
+		text-decoration: underline;
+	}
+
+	.icon-information {
+		width: 100%;
+		max-width: 90px;
+	}
+}

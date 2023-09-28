@@ -1,0 +1,285 @@
+.header-site {
+
+	background-color: $predominant-color;
+	padding: 10px 0;
+	box-shadow: $shadow;
+	z-index: 6;
+	width: 100%;
+	transition: 0.5s ease;
+	top: -100px;
+
+	@media(min-width: 992px) {
+		box-shadow: unset;
+	}
+
+	.search-bar {
+		display: none;
+	}
+
+	.open-cart {
+		display: inline-block;
+		margin-left: 15px;
+		padding: 6px;
+		transition: 0.2s ease;
+		position: relative;
+
+		&:hover {
+			border-radius: 50%;
+			background-color: rgba(0,0,0,.5);
+			transition: 0.2s ease;
+
+			img {
+				transform: scale(1.1);
+				transition: 0.2s ease;
+			}
+		}
+
+		img {
+			width: 25px;
+			transition: 0.2s ease;
+		}
+
+		&-count {
+			@extend .montserratRegular;
+
+			font-size: 12px;
+			border-radius: 50%;
+			width: 15px;
+			height: 15px;
+			background-color: #74AA46;
+			bottom: 0px;
+			right: 0px;
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: #fff;
+		}
+	}
+
+	&.header-fixed {
+		position: fixed;
+		top: 0;
+		left: 0;
+		transition: 0.5s ease;
+
+		.open-cart {
+			display: none;
+		}
+
+		.logo-site {
+			img {
+				transition: 0.5s ease;
+				width: 55px;
+
+				@media(min-width: 992px) {
+					width: 65px;
+				}
+
+				@media(min-width: 1200px) {
+					width: 75px;
+				}
+			}
+		}
+
+		.menu-site {
+
+			&-item {
+				margin-right: 20px;
+
+				@media(min-width: 1200px) {
+					margin-right: 50px;
+				}
+
+				&-link {
+					font-size: 14px;
+				}
+			}
+		}
+
+		.search-bar {
+			display: block;
+			margin: 0 15px;
+
+			@media(min-width: 576px) {
+				margin-right: auto;
+			}
+
+			.form-group {
+
+				.form-control {
+					box-shadow: unset;
+				    font-size: 14px;
+				    padding: 0 15px;
+				    height: 40px;
+
+				    &::placeholder {
+				    	font-size: 14px;
+
+					    @media(min-width: 992px) {
+					    	font-size: 18px;
+					    }
+				    }
+
+				    @media(min-width: 576px) {
+				    	padding: 0 45px;
+				    }
+
+				    @media(min-width: 992px) {
+				    	font-size: 18px;
+				    	padding: 0 30px;
+				    }
+
+				    @media(min-width: 1200px) {
+				    	height: 50px;
+				    }
+				}
+
+				.btn-search {
+					right: 4%;
+
+					img {
+						width: 22px;
+					}
+				}
+			}
+		}
+	}
+
+	.logo-site {
+
+		img {
+			width: 72px;
+
+			@media(min-width: 992px) {
+				width: 112px;
+			}
+		}
+	}
+
+	.menu-link {
+		@extend .d-lg-none;
+
+		img {
+			width: 37px;
+		}
+	}
+
+	.panel {
+		position: fixed;
+		top: -100%;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		transition: 0.5s ease;
+		z-index: 6;
+		background-color: #fff;
+
+		@media(min-width: 992px) {
+			position: static;
+			width: unset;
+			height: unset;
+			background-color: transparent;
+		}
+
+		.menu-link {
+			position: absolute;
+			top: 13px;
+			right: 10px;
+
+			img {
+				width: 47px;
+			}
+		}
+
+		&.push-panel {
+			top: 0;
+			transition: 0.5s ease;
+		}
+	}
+
+	.menu-footer {
+		@extend .list-unstyled, .d-lg-none;
+
+		margin-bottom: 0;
+		margin-top: auto;
+
+		&-item {
+			@extend .text-center;
+
+			&-title {
+				@extend .montserratSemiBold;
+
+				font-size: 20px;
+				color: #fff;
+				margin-bottom: 4px;
+			}
+
+			&-link,
+			&-subtitle {
+				@extend .montserratRegular;
+
+				font-size: 12px;
+				color: #fff;
+				margin-bottom: 4px;
+			}
+
+			.list-cards {
+				@extend .list-unstyled, .d-flex, .flex-wrap, .justify-content-center;
+
+				margin-bottom: 0;
+
+				&-item {
+					margin-right: 2px;
+					margin-bottom: 2px;
+
+					&:last-child {
+						margin-right: 0;
+					}
+
+					&-image {
+						
+					}
+				}
+			}
+		}
+	}
+}
+
+.category-menu {
+	@extend .d-none, .d-lg-block, .text-center;
+	
+	background-color: darken($predominant-color, 10%);
+	border-radius: 0 0 50px 50px;
+	padding: 15px 0;
+	box-shadow: $shadow;
+
+	.text-category {
+		@extend .montserratRegular;
+
+		font-size: 18px;
+		color: #fff;
+		margin-bottom: 0;
+	}
+
+	&-list {
+		@extend .list-unstyled, .d-flex, .justify-content-between;
+
+		margin-bottom: 0;
+
+		&-item {
+
+			&-link {
+				@extend .montserratRegular;
+
+				font-size: 18px;
+				color: #fff;
+
+				&:hover,
+				&.active {
+					color: $yellow;
+				}
+			}
+		}
+	}
+}
